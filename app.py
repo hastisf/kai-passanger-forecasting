@@ -101,7 +101,8 @@ def load_historical_data():
   if os.path.exists(data_path):
     try:
       df = pd.read_csv(data_path)
-      # Jika ada kolom bertema tanggal/bulan/periode, jadikan sebagai index
+
+      # 1. Cari & Atur Kolom Tanggal/Periode sebagai Index
       date_cols = [
           c
           for c in df.columns
@@ -114,11 +115,21 @@ def load_historical_data():
       else:
         df.index = pd.to_datetime(df.index, errors="coerce")
 
+      # 2. PAKSA SEMUA KOLOM JADI NUMERIK / FLOAT (Mencegah Error String)
+      for col in df.columns:
+        if df[col].dtype == "object":
+          # Hapus spasi dan ganti koma jika ada
+          df[col] = df[col].astype(str).str.replace(",", ".").str.strip()
+        df[col] = pd.to_numeric(df[col], errors="coerce")
+
+      # Isi data bernilai NaN jika ada hasil gagal konversi
+      df = df.ffill().bfill()
+
       return df
     except Exception:
       pass
 
-  # Fallback ke data sintetis jika file CSV gagal dibaca
+  # Fallback Data Sintetis (Terkonversi Aman)
   dates = pd.date_range(start="2006-01-01", end="2026-05-01", freq="MS")
   np.random.seed(42)
   n = len(dates)
@@ -147,7 +158,6 @@ def load_historical_data():
       },
       index=dates,
   )
-
 
 df_historical = load_historical_data()
 
@@ -241,20 +251,25 @@ else:
   region_data = df_historical[selected_region]
 
 def get_forecast(series, steps):
-  # 1. Konversi aman index series ke Datetime
-  series.index = pd.to_datetime(series.index, errors="coerce")
+  # 1. Pastikan Series berupa tipe numerik/float murni
+  series = pd.to_numeric(series, errors="coerce").dropna()
 
-  # Jika ada nilai NaT akibat gagal parse, bersihkan
+  # 2. Konversi Index ke Datetime
+  series.index = pd.to_datetime(series.index, errors="coerce")
   series = series[series.index.notnull()]
 
-  # Jika series kosong karena kegagalan total parsing, buat tanggal manual dari data historis
   if len(series) == 0:
     last_date = pd.Timestamp("2026-05-01")
     last_val = 2000.0
   else:
     last_date = series.index[-1]
-    last_val = series.iloc[-1]
+    # Konversi paksa nilai terakhir ke float
+    try:
+      last_val = float(series.iloc[-1])
+    except (ValueError, TypeError):
+      last_val = 2000.0
 
+  # Coba jalankan model ter-load (.joblib)
   model_file = "model_sarima.joblib"
   if os.path.exists(model_file):
     try:
@@ -272,9 +287,11 @@ def get_forecast(series, steps):
       start=last_date + pd.DateOffset(months=1), periods=steps, freq="MS"
   )
 
-  recent_12 = (
-      series.tail(12).values if len(series) >= 12 else np.ones(12) * last_val
-  )
+  if len(series) >= 12:
+    recent_12 = series.tail(12).values.astype(float)
+  else:
+    recent_12 = np.ones(12, dtype=float) * last_val
+
   mean_rec = np.mean(recent_12)
   seasonal_pattern = recent_12 / mean_rec if mean_rec != 0 else np.ones(12)
 
