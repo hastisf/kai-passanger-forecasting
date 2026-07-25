@@ -345,7 +345,7 @@ metrics_db = {
 }
 m = metrics_db.get(
     target,
-default {"MAE": "500.00", "RMSE": "750.00", "MAPE": "4.50%"}
+{"MAE": "500.00", "RMSE": "750.00", "MAPE": "4.50%"}
 )
 
 col_m1, col_m2, col_m3, col_m4 = st.columns(4)
