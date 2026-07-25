@@ -5,12 +5,21 @@ import numpy as np
 import pandas as pd
 import streamlit as st
 
+# Path ke logo lokal
+LOGO_PATH = "logo.png"
+
+# Load image untuk favicon/page icon
+if os.path.exists(LOGO_PATH):
+  page_logo = Image.open(LOGO_PATH)
+else:
+  page_logo = "🚆"  # Fallback emoji jika logo.png tidak ditemukan
+
 # ==========================================
 # 1. PAGE CONFIGURATION & CUSTOM STYLING
 # ==========================================
 st.set_page_config(
     page_title="Forecasting Penumpang Kereta Api - KAI",
-    page_icon="🚆",
+    page_icon=page_logo,  
     layout="wide",
 )
 
