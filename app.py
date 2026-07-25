@@ -166,7 +166,7 @@ with st.sidebar:
 
   st.markdown("""
     * **Algoritma Utama:** SARIMA (Seasonal ARIMA)
-    * **Dataset:** BPS (Badan Pusat Statistik)
+    * **Dataset:** Badan Pusat Statistik
     * **Rentang Data Historis:** Jan 2006 – Mei 2026
     * **Satuan Data:** Ribu Penumpang
     """)
@@ -175,10 +175,10 @@ with st.sidebar:
 
   with st.expander("💡 Mengapa Memilih SARIMA?"):
     st.markdown("""
-        **Hasil Evaluasi Eksperimen Model:**
-        * **Random Forest:** Memiliki nilai MAPE terendah saat pengujian data historis, namun saat dilakukan *long-horizon forecast*, hasil prediksinya **tidak *make sense*** (flat / konstan ekstrem dan tidak menangkap tren musiman).
-        * **XGBoost, Prophet & Holt-Winters:** Hasil proyeksi cenderung terlalu fluktuatif atau mengalami deviasi tren yang tinggi dari kondisi aktual pasca-pandemi.
-        * **SARIMA (Terpilih):** Menghasilkan tren dan pola musiman (*seasonality*) yang **paling mendekati pola aktual** perkembangan penumpang Kereta Api di Indonesia.
+        **Hasil Evaluasi Model:**
+- **Random Forest:** MAPE terendah, namun hasil forecast jangka panjang kurang realistis.
+- **XGBoost, Prophet, & Holt-Winters:** Forecast cenderung terlalu fluktuatif dan menyimpang dari tren aktual.
+- **SARIMA (Terpilih):** Menghasilkan pola tren dan musiman yang paling mendekati data aktual sehingga dipilih sebagai model terbaik.
         """)
 
 # ==========================================
@@ -237,12 +237,17 @@ else:
 
 
 def get_forecast(series, steps):
+  # 1. Pastikan index series sudah dalam format Datetime
+  series.index = pd.to_datetime(series.index)
+
+  # 2. Ambil tanggal terakhir dan pastikan dikonversi ke Timestamp
+  last_date = pd.to_datetime(series.index[-1])
+
   model_file = "model_sarima.joblib"
   if os.path.exists(model_file):
     try:
       model = joblib.load(model_file)
       forecast_vals = model.forecast(steps=steps)
-      last_date = series.index[-1]
       future_dates = pd.date_range(
           start=last_date + pd.DateOffset(months=1), periods=steps, freq="MS"
       )
@@ -250,8 +255,7 @@ def get_forecast(series, steps):
     except Exception:
       pass
 
-  # Fallback SARIMA Trend Simulation
-  last_date = series.index[-1]
+  # Fallback SARIMA Trend Simulation jika model belum ter-load
   future_dates = pd.date_range(
       start=last_date + pd.DateOffset(months=1), periods=steps, freq="MS"
   )
