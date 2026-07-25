@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import streamlit as st
+from PIL import Image
 
 # Path ke logo lokal
 LOGO_PATH = "logo.png"
@@ -159,16 +160,18 @@ def load_historical_data():
 
   return pd.DataFrame(
       {
-          "Nasional": nasional,
-          "Jabodetabek": jabodetabek,
-          "Non Jabodetabek": non_jabodetabek,
-          "Jawa (Jabodetabek + Non Jabodetabek)": jawa,
-          "Sumatera": sumatera,
+        "nasional_ribu": nasional,
+    	"jabodetabek_ribu": jabodetabek,
+    	"non_jabodetabek_ribu": non_jabodetabek,
+    	"jawa_ribu": jawa,
+    	"sumatera_ribu": sumatera,
       },
       index=dates,
   )
 
 df_historical = load_historical_data()
+df_historical.index = pd.to_datetime(df_historical.index)
+df_historical = df_historical.sort_index()
 
 # ==========================================
 # 3. SIDEBAR NAVIGATION & INFO PANEL
@@ -231,14 +234,26 @@ st.markdown("---")
 col_ctrl1, col_ctrl2 = st.columns(2)
 
 with col_ctrl1:
-  region_options = [
-      "Nasional",
-      "Jabodetabek",
-      "Non Jabodetabek",
-      "Jawa (Jabodetabek + Non Jabodetabek)",
-      "Sumatera",
-  ]
-  selected_region = st.selectbox("📍 Pilih Wilayah / Rute:", region_options)
+ target_columns = list(df_historical.columns)
+
+region_mapping = {
+    col: col.replace("_ribu", "")
+            .replace("_", " ")
+            .title()
+    for col in target_columns
+}
+
+display_mapping = {
+    v: k for k, v in region_mapping.items()
+}
+
+selected_display = st.selectbox(
+    "📍 Pilih Wilayah / Rute",
+    list(display_mapping.keys())
+)
+
+target = display_mapping[selected_display]
+
 
 with col_ctrl2:
   horizon_mapping = {
@@ -254,10 +269,7 @@ with col_ctrl2:
 # ==========================================
 # 5. FORECASTING COMPUTATION
 # ==========================================
-if selected_region not in df_historical.columns:
-  region_data = df_historical.iloc[:, 0]
-else:
-  region_data = df_historical[selected_region]
+region_data = df_historical[target]
 
 def get_forecast(series, steps):
   # 1. Pastikan Series berupa tipe numerik/float murni
@@ -321,18 +333,19 @@ forecast_series = get_forecast(region_data, forecast_steps)
 st.subheader("📊 Metrik Evaluasi Model & Performa SARIMA")
 
 metrics_db = {
-    "Nasional": {"MAE": "845.20", "RMSE": "1,120.45", "MAPE": "4.12%"},
-    "Jabodetabek": {"MAE": "612.10", "RMSE": "830.15", "MAPE": "4.35%"},
-    "Non Jabodetabek": {"MAE": "195.40", "RMSE": "260.80", "MAPE": "5.01%"},
-    "Jawa (Jabodetabek + Non Jabodetabek)": {
+    "nasional_ribu": {"MAE": "845.20", "RMSE": "1,120.45", "MAPE": "4.12%"},
+    "jabodetabek_ribu": {"MAE": "612.10", "RMSE": "830.15", "MAPE": "4.35%"},
+    "non_jabodetabek_rib": {"MAE": "195.40", "RMSE": "260.80", "MAPE": "5.01%"},
+    "jawa_ribu": {
         "MAE": "790.30",
         "RMSE": "1,040.60",
         "MAPE": "4.18%",
     },
-    "Sumatera": {"MAE": "42.15", "RMSE": "58.90", "MAPE": "6.24%"},
+    "sumatera_ribu": {"MAE": "42.15", "RMSE": "58.90", "MAPE": "6.24%"},
 }
 m = metrics_db.get(
-    selected_region, {"MAE": "500.00", "RMSE": "750.00", "MAPE": "4.50%"}
+    target,
+default {"MAE": "500.00", "RMSE": "750.00", "MAPE": "4.50%"}
 )
 
 col_m1, col_m2, col_m3, col_m4 = st.columns(4)
@@ -382,10 +395,10 @@ st.markdown("<br>", unsafe_allow_html=True)
 # ==========================================
 # 7. VISUALIZATION
 # ==========================================
-st.subheader(f"📈 Grafik Historis & Forecast Penumpang - {selected_region}")
+st.subheader(f"📈 Grafik Historis & Forecast Penumpang - {selected_display}")
 
 fig, ax = plt.subplots(figsize=(12, 5))
-plot_hist = region_data[region_data.index >= "2021-01-01"]
+plot_hist = region_data.loc["2021-01-01":]
 
 ax.plot(
     plot_hist.index,
@@ -411,7 +424,7 @@ ax.axvline(
 )
 
 ax.set_title(
-    f"Proyeksi Jumlah Penumpang ({selected_region}) - Satuan: Ribu",
+    f"Proyeksi Jumlah Penumpang ({selected_display}) - Satuan: Ribu",
     fontsize=12,
     fontweight="bold",
     pad=12,
