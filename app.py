@@ -100,11 +100,25 @@ def load_historical_data():
   data_path = "target_info.csv"
   if os.path.exists(data_path):
     try:
-      return pd.read_csv(data_path, index_col=0, parse_dates=True)
+      df = pd.read_csv(data_path)
+      # Jika ada kolom bertema tanggal/bulan/periode, jadikan sebagai index
+      date_cols = [
+          c
+          for c in df.columns
+          if c.lower() in ["bulan", "periode", "date", "tanggal", "unnamed: 0"]
+      ]
+      if date_cols:
+        df[date_cols[0]] = pd.to_datetime(df[date_cols[0]], errors="coerce")
+        df = df.dropna(subset=[date_cols[0]])
+        df = df.set_index(date_cols[0])
+      else:
+        df.index = pd.to_datetime(df.index, errors="coerce")
+
+      return df
     except Exception:
       pass
 
-  # Synthetic fallback data matching BPS range (2006-01 to 2026-05)
+  # Fallback ke data sintetis jika file CSV gagal dibaca
   dates = pd.date_range(start="2006-01-01", end="2026-05-01", freq="MS")
   np.random.seed(42)
   n = len(dates)
@@ -226,13 +240,20 @@ if selected_region not in df_historical.columns:
 else:
   region_data = df_historical[selected_region]
 
-
 def get_forecast(series, steps):
-  # 1. Pastikan index series sudah dalam format Datetime
-  series.index = pd.to_datetime(series.index)
+  # 1. Konversi aman index series ke Datetime
+  series.index = pd.to_datetime(series.index, errors="coerce")
 
-  # 2. Ambil tanggal terakhir dan pastikan dikonversi ke Timestamp
-  last_date = pd.to_datetime(series.index[-1])
+  # Jika ada nilai NaT akibat gagal parse, bersihkan
+  series = series[series.index.notnull()]
+
+  # Jika series kosong karena kegagalan total parsing, buat tanggal manual dari data historis
+  if len(series) == 0:
+    last_date = pd.Timestamp("2026-05-01")
+    last_val = 2000.0
+  else:
+    last_date = series.index[-1]
+    last_val = series.iloc[-1]
 
   model_file = "model_sarima.joblib"
   if os.path.exists(model_file):
@@ -246,16 +267,16 @@ def get_forecast(series, steps):
     except Exception:
       pass
 
-  # Fallback SARIMA Trend Simulation jika model belum ter-load
+  # Fallback SARIMA Trend Simulation
   future_dates = pd.date_range(
       start=last_date + pd.DateOffset(months=1), periods=steps, freq="MS"
   )
-  last_val = series.iloc[-1]
 
-  recent_12 = series.tail(12).values
-  seasonal_pattern = (
-      recent_12 / np.mean(recent_12) if np.mean(recent_12) != 0 else np.ones(12)
+  recent_12 = (
+      series.tail(12).values if len(series) >= 12 else np.ones(12) * last_val
   )
+  mean_rec = np.mean(recent_12)
+  seasonal_pattern = recent_12 / mean_rec if mean_rec != 0 else np.ones(12)
 
   trend_factor = 1.004 ** np.arange(1, steps + 1)
   tiled_seasonality = np.tile(seasonal_pattern, int(np.ceil(steps / 12)))[
