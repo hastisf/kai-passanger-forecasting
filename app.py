@@ -141,15 +141,6 @@ df_historical = load_historical_data()
 # 3. SIDEBAR NAVIGATION & INFO PANEL
 # ==========================================
 with st.sidebar:
-  # Load Logo Lokal KAI
-  if os.path.exists(LOGO_PATH):
-    st.image(LOGO_PATH, width=180)
-  else:
-    st.image(
-        "https://upload.wikimedia.org/wikipedia/commons/5/5D/Logo_PT_Kereta_Api_Indonesia_%28Persero%29_2020.svg",
-        width=180,
-    )
-
   st.markdown("---")
 
   st.markdown("### 📌 Informasi Model")
