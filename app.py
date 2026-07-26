@@ -225,7 +225,7 @@ with col_header2:
   st.title("Forecasting Penumpang Kereta Api")
   st.caption(
       "Dashboard Prediksi Volume Penumpang Kereta Api Berbasis Model Time"
-      " Series SARIMA (Sumber Data: BPS)"
+      " Series SARIMA"
   )
 
 st.markdown("---")
