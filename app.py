@@ -541,9 +541,9 @@ st.markdown("""
 display:flex;
 justify-content:space-between;
 align-items:center;
+padding:8px 0;
 font-size:14px;
 color:#6c757d;
-padding:8px 0;
 flex-wrap:wrap;
 ">
 
@@ -553,17 +553,21 @@ flex-wrap:wrap;
 
 <div>
 <a href="https://www.linkedin.com/in/hasti-sri-fatmawati-361b49417/"
-target="_blank"
-style="text-decoration:none;">
-💼 LinkedIn
+target="_blank">
+
+<img src="https://cdn.simpleicons.org/linkedin/0A66C2"
+width="24">
+
 </a>
 </div>
 
 <div>
 <a href="https://github.com/hastisf"
-target="_blank"
-style="text-decoration:none;">
-💻 GitHub
+target="_blank">
+
+<img src="https://cdn.simpleicons.org/github/181717"
+width="24">
+
 </a>
 </div>
 
