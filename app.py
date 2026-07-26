@@ -149,6 +149,24 @@ footer{
 </style>
 """, unsafe_allow_html=True)
 
+# ==========================================
+# CSS TAMBAHAN TOMBOL SIDEBAR
+# ==========================================
+st.markdown("""
+<style>
+button[kind="header"]{
+    color:#002D62 !important;
+}
+
+[data-testid="collapsedControl"]{
+    color:#002D62 !important;
+    background:white !important;
+    border-radius:6px;
+    padding:4px;
+}
+</style>
+""", unsafe_allow_html=True)
+
 # Path ke logo lokal
 LOGO_PATH = "logo.png"
 # ==========================================
