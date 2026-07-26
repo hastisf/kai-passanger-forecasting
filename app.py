@@ -321,7 +321,7 @@ with st.sidebar:
         st.info("""
 **Mengapa SARIMA dipilih?**
 
-• Random Forest memiliki error paling rendah, namun hasil forecast jangka panjang kurang realistis.
+• Random Forest memiliki error paling rendah pada data uji, tetapi tidak mampu menangkap seasonality secara eksplisit sehingga prediksi multi-step kurang stabil.
 
 • XGBoost, Prophet, dan Holt-Winters menghasilkan prediksi yang lebih fluktuatif.
 
@@ -370,6 +370,20 @@ with header_col2:
         """,
         unsafe_allow_html=True,
     )
+
+ # ==========================
+    # INFORMASI PEMODELAN
+    # ==========================
+    st.markdown("""
+    <div class="info-card">
+    <b>📋 Informasi Pemodelan</b><br><br>
+
+    🗓️ <b>Periode Training:</b> Jan 2006 – Des 2024<br>
+    🧪 <b>Periode Testing:</b> Jan 2025 – Mei 2026<br>
+    📈 <b>Forecast Horizon:</b> 12 Bulan<br>
+    ⚙️ <b>Model:</b> SARIMA (0,1,1)(1,0,1,12)
+    </div>
+    """, unsafe_allow_html=True)
 # ==========================================
 # FILTER
 # ==========================================
