@@ -555,8 +555,8 @@ flex-wrap:wrap;
 <a href="https://www.linkedin.com/in/hasti-sri-fatmawati-361b49417/"
 target="_blank">
 
-<img src="https://cdn.simpleicons.org/linkedin/0A66C2"
-width="24">
+<img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/github.svg"
+width="22">
 
 </a>
 </div>
