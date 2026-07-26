@@ -252,31 +252,32 @@ with st.sidebar:
 # ==========================================
 # 4. MAIN CONTENT DASHBOARD
 # ==========================================
-col_header1, col_header2 = st.columns([0.6, 5.4])
+header_col1, header_col2 = st.columns([1, 6])
 
-with col_header1:
+with header_col1:
     if os.path.exists(LOGO_PATH):
-        st.image(LOGO_PATH, width=85)
+        st.image(LOGO_PATH, width=75)
     else:
         st.image(
             "https://upload.wikimedia.org/wikipedia/commons/5/5D/Logo_PT_Kereta_Api_Indonesia_%28Persero%29_2020.svg",
-            width=85,
+            width=75,
         )
 
-with col_header2:
-    st.markdown("""
-    <div style="padding-top:8px;">
-        <h1 style="margin-bottom:0;">
-            Forecasting Penumpang Kereta Api
-        </h1>
-        <p style="margin-top:3px;color:#6c757d;">
-            Dashboard Prediksi Volume Penumpang Kereta Api Berbasis Model SARIMA
-        </p>
-    </div>
-    """, unsafe_allow_html=True)
+with header_col2:
+    st.markdown(
+        """
+        <h2 style="margin-bottom:0;color:#002D62;">
+        Forecasting Penumpang Kereta Api
+        </h2>
+        """,
+        unsafe_allow_html=True,
+    )
 
-st.markdown("---")
+    st.caption(
+        "Dashboard prediksi jumlah penumpang PT Kereta Api Indonesia menggunakan model SARIMA."
+    )
 
+st.divider()
 # ==========================================
 # FILTER
 # ==========================================
