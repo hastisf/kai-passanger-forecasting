@@ -101,6 +101,17 @@ html{
     color:#1F2937;
 }
 
+/* Sidebar Expander */
+section[data-testid="stSidebar"] details summary{
+    font-size:18px !important;
+    font-weight:700 !important;
+    color:#002D62 !important;
+}
+
+section[data-testid="stSidebar"] details summary:hover{
+    color:#F57C00 !important;
+}
+
 /* Metric Card */
 .metric-card{
     background:#FFFFFF;
