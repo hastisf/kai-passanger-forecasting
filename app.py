@@ -227,13 +227,11 @@ with st.sidebar:
 
   st.markdown("---")
 
-  with st.expander("💡 Mengapa Memilih SARIMA?"):
-    st.markdown("""
-        **Hasil Evaluasi Model:**
-- **Random Forest:** MAPE terendah, namun hasil forecast jangka panjang kurang realistis.
-- **XGBoost, Prophet, & Holt-Winters:** Forecast cenderung terlalu fluktuatif dan menyimpang dari tren aktual.
-- **SARIMA (Terpilih):** Menghasilkan pola tren dan musiman yang paling mendekati data aktual sehingga dipilih sebagai model terbaik.
-        """)
+  Hasil Evaluasi Model:
+
+Random Forest: MAPE terendah, namun hasil forecast jangka panjang kurang realistis.
+XGBoost, Prophet, & Holt-Winters: Forecast cenderung terlalu fluktuatif dan menyimpang dari tren aktual.
+SARIMA (Terpilih): Menghasilkan pola tren dan musiman yang paling mendekati data aktual sehingga dipilih sebagai model terbaik.
 
 # ==========================================
 # 4. MAIN CONTENT DASHBOARD
@@ -357,65 +355,50 @@ forecast_series = get_forecast(region_data, forecast_steps)
 # ==========================================
 # 6. EVALUATION METRICS DISPLAY
 # ==========================================
-st.subheader("📊 Metrik Evaluasi Model & Performa SARIMA")
+st.subheader("📊 Hasil Evaluasi Model SARIMA")
 
-metrics_db = {
-    "nasional_ribu": {"MAE": "845.20", "RMSE": "1,120.45", "MAPE": "4.12%"},
-    "jabodetabek_ribu": {"MAE": "612.10", "RMSE": "830.15", "MAPE": "4.35%"},
-    "non_jabodetabek_rib": {"MAE": "195.40", "RMSE": "260.80", "MAPE": "5.01%"},
-    "jawa_ribu": {
-        "MAE": "790.30",
-        "RMSE": "1,040.60",
-        "MAPE": "4.18%",
-    },
-    "sumatera_ribu": {"MAE": "42.15", "RMSE": "58.90", "MAPE": "6.24%"},
-}
-m = metrics_db.get(
-    target,
-{"MAE": "500.00", "RMSE": "750.00", "MAPE": "4.50%"}
+st.caption(
+    "ℹ️ Evaluasi model menggunakan data nasional karena data penumpang per wilayah hanya tersedia hingga Desember 2023. Model SARIMA yang sama digunakan sebagai acuan pada visualisasi forecasting."
 )
 
+# Hasil evaluasi model SARIMA
+mae = "17,373.61"
+rmse = "19,145.57"
+mape = "42.60%"
+
 col_m1, col_m2, col_m3, col_m4 = st.columns(4)
+
 with col_m1:
-  st.markdown(
-      """
+    st.markdown("""
     <div class="metric-card">
-        <div class="metric-label">Model Utama</div>
+        <div class="metric-label">Model Terpilih</div>
         <div class="metric-value" style="color:#002D62;">SARIMA</div>
     </div>
-    """,
-      unsafe_allow_html=True,
-  )
+    """, unsafe_allow_html=True)
+
 with col_m2:
-  st.markdown(
-      f"""
+    st.markdown(f"""
     <div class="metric-card">
         <div class="metric-label">MAE (Mean Absolute Error)</div>
-        <div class="metric-value">{m['MAE']}</div>
+        <div class="metric-value">{mae}</div>
     </div>
-    """,
-      unsafe_allow_html=True,
-  )
+    """, unsafe_allow_html=True)
+
 with col_m3:
-  st.markdown(
-      f"""
+    st.markdown(f"""
     <div class="metric-card">
-        <div class="metric-label">RMSE (Root Mean Sq. Error)</div>
-        <div class="metric-value">{m['RMSE']}</div>
+        <div class="metric-label">RMSE (Root Mean Square Error)</div>
+        <div class="metric-value">{rmse}</div>
     </div>
-    """,
-      unsafe_allow_html=True,
-  )
+    """, unsafe_allow_html=True)
+
 with col_m4:
-  st.markdown(
-      f"""
+    st.markdown(f"""
     <div class="metric-card">
-        <div class="metric-label">MAPE (Mean Abs. % Error)</div>
-        <div class="metric-value" style="color:#2E7D32;">{m['MAPE']}</div>
+        <div class="metric-label">MAPE (Mean Absolute Percentage Error)</div>
+        <div class="metric-value" style="color:#2E7D32;">{mape}</div>
     </div>
-    """,
-      unsafe_allow_html=True,
-  )
+    """, unsafe_allow_html=True)
 
 st.markdown("<br>", unsafe_allow_html=True)
 
