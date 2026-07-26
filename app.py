@@ -581,6 +581,34 @@ ax.grid(True, linestyle="--", alpha=0.5)
 
 st.pyplot(fig)
 
+st.markdown("### 📌 Interpretasi Hasil Forecast")
+
+forecast_awal = forecast_series.iloc[0]
+forecast_akhir = forecast_series.iloc[-1]
+
+perubahan = ((forecast_akhir - forecast_awal) / forecast_awal) * 100
+
+if perubahan > 0:
+    st.success(
+        f"""
+Jumlah penumpang **{selected_display}** diperkirakan mengalami **tren meningkat sebesar {perubahan:.2f}%**
+selama periode **{forecast_series.index[0].strftime('%B %Y')}** hingga
+**{forecast_series.index[-1].strftime('%B %Y')}**.
+
+Hal ini menunjukkan bahwa permintaan layanan kereta api pada wilayah tersebut diproyeksikan tetap tumbuh berdasarkan pola historis yang dipelajari oleh model SARIMA.
+"""
+    )
+else:
+    st.warning(
+        f"""
+Jumlah penumpang **{selected_display}** diperkirakan mengalami **tren menurun sebesar {abs(perubahan):.2f}%**
+selama periode **{forecast_series.index[0].strftime('%B %Y')}** hingga
+**{forecast_series.index[-1].strftime('%B %Y')}**.
+
+Hasil ini mengindikasikan adanya kecenderungan penurunan jumlah penumpang berdasarkan pola historis yang dipelajari oleh model SARIMA.
+"""
+    )
+
 # ==========================================
 # 8. DATA TABLE DISPLAY
 # ==========================================
