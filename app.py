@@ -219,17 +219,17 @@ with st.sidebar:
   )
 
   st.markdown("""
-    * **Algoritma Utama:** SARIMA (Seasonal ARIMA)
-    * **Dataset:** Badan Pusat Statistik
-    * **Rentang Data Historis:** Jan 2006 – Mei 2026
-    * **Satuan Data:** Ribu Penumpang
-    """)
+  * **Algoritma Utama:** SARIMA (Seasonal ARIMA)
+  * **Dataset:** Badan Pusat Statistik
+  * **Rentang Data Historis:** Jan 2006 – Mei 2026
+  * **Satuan Data:** Ribu Penumpang
+  """)
 
-    st.markdown("---")
+  st.markdown("---")
 
-    with st.expander("📊 Evaluasi & Pemilihan Model", expanded=False):
+  with st.expander("📊 Evaluasi & Pemilihan Model", expanded=False):
 
-        st.markdown("""
+    st.markdown("""
 | Model | MAE | RMSE | MAPE |
 |:---|---:|---:|---:|
 | Random Forest | 8,904.91 | 10,147.50 | **21.02%** |
@@ -238,9 +238,9 @@ with st.sidebar:
 | ARIMA | 18,410.88 | 20,149.45 | 45.34% |
 | Holt-Winters | 20,101.08 | 22,193.01 | 49.22% |
 | Prophet | 32,427.39 | 34,950.11 | 80.84% |
-        """)
+""")
 
-        st.info("""
+    st.info("""
 **Mengapa SARIMA dipilih?**
 
 • Random Forest memiliki error paling rendah, namun hasil forecast jangka panjang kurang realistis.
@@ -249,7 +249,6 @@ with st.sidebar:
 
 • **SARIMA dipilih** karena mampu mempertahankan pola tren dan musiman sehingga menghasilkan forecast yang paling representatif.
 """)
-
 # ==========================================
 # 4. MAIN CONTENT DASHBOARD
 # ==========================================
