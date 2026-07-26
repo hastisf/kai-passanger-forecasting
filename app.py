@@ -114,8 +114,8 @@ def load_historical_data():
             df = pd.read_csv(data_path)
 
             # DEBUG
-            st.write("Kolom:", df.columns.tolist())
-            st.dataframe(df.head())
+            #st.write("Kolom:", df.columns.tolist())
+            #st.dataframe(df.head())
 
             # Cari kolom tanggal
             date_cols = [
