@@ -485,13 +485,11 @@ df_forecast_res = pd.DataFrame({
     "Prediksi (Ribu)": forecast_series.values.round(2),
 })
 
-col_tbl1, col_tbl2 = st.columns([2, 1])
-with col_tbl1:
-  st.dataframe(df_forecast_res, use_container_width=True, height=300)
-
-with col_tbl2:
-  total_pred = forecast_series.sum()
-  avg_pred = forecast_series.mean()
+st.dataframe(
+    df_forecast_res,
+    use_container_width=True,
+    height=260,
+)
 
   st.markdown(
 f"""
