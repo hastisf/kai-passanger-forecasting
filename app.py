@@ -539,6 +539,30 @@ st.markdown("<br>", unsafe_allow_html=True)
 # ==========================================
 # 7. VISUALIZATION
 # ==========================================
+# forecast_series sudah dibuat sebelumnya
+
+col1, col2, col3 = st.columns(3)
+
+with col1:
+    st.metric(
+        "Forecast Minimum",
+        f"{forecast_series.min():,.0f} Ribu"
+    )
+
+with col2:
+    st.metric(
+        "Forecast Rata-rata",
+        f"{forecast_series.mean():,.0f} Ribu"
+    )
+
+with col3:
+    st.metric(
+        "Forecast Maksimum",
+        f"{forecast_series.max():,.0f} Ribu"
+    )
+
+st.subheader(f"📈 Historis & Forecast Penumpang - {selected_display}")
+
 st.subheader(f"📈 Historis & Forecast Penumpang - {selected_display}")
 
 fig, ax = plt.subplots(figsize=(12, 5))
