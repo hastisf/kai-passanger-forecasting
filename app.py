@@ -124,7 +124,7 @@ section[data-testid="stSidebar"] details summary:hover{
     padding:18px;
     text-align:center;
     box-shadow:0 2px 6px rgba(0,0,0,.06);
-    height:135px;
+    height:90px;
 }
 
 .metric-icon{
