@@ -169,6 +169,7 @@ button[kind="header"]{
 
 # Path ke logo lokal
 LOGO_PATH = "logo.png"
+
 # ==========================================
 # 2. DATA LOAD / GENERATOR
 # ==========================================
@@ -333,18 +334,32 @@ with header_col1:
 with header_col2:
     st.markdown(
         """
-        <h2 style="margin-bottom:0;color:#002D62;">
-        Forecasting Penumpang Kereta Api
+        <h2 style="
+            margin:0;
+            padding:0;
+            color:#002D62;
+            line-height:1.2;
+        ">
+            Forecasting Penumpang Kereta Api
         </h2>
+
+        <p style="
+            margin-top:4px;
+            margin-bottom:8px;
+            color:#6B7280;
+            font-size:15px;
+        ">
+            Dashboard prediksi jumlah penumpang PT Kereta Api Indonesia menggunakan model SARIMA.
+        </p>
+
+        <hr style="
+            margin:6px 0 8px 0;
+            border:0;
+            border-top:1px solid #E5E7EB;
+        ">
         """,
         unsafe_allow_html=True,
     )
-
-    st.caption(
-        "Dashboard prediksi jumlah penumpang PT Kereta Api Indonesia menggunakan model SARIMA."
-    )
-
-st.divider()
 # ==========================================
 # FILTER
 # ==========================================
