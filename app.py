@@ -305,7 +305,7 @@ with st.sidebar:
 
     st.markdown("---")
 
-    st.markdown("### 📊 Evaluasi & Pemilihan Model")
+    st.markdown("#### 📊 Evaluasi & Pemilihan Model")
 
     with st.expander("", expanded=False):
 
