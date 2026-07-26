@@ -484,7 +484,7 @@ with col_tbl2:
   st.markdown(
       f"""
     <div style="background-color:#FFFFFF; padding:15px; border-radius:8px; border:1px solid #E2E8F0;">
-        <h4 style="margin-top:0; color:#002D62;">💡 Ringkasan Forecast</h4>
+        <h4 style="margin-top:0; color:#002D62;"> Ringkasan Forecast</h4>
         <p><b>Total Volume ({forecast_steps} Bln):</b><br>
         <span style="font-size:18px; color:#FF5722; font-weight:bold;">{total_pred:,.2f} Ribu</span></p>
         <p><b>Rata-rata per Bulan:</b><br>
