@@ -321,7 +321,7 @@ with st.sidebar:
 * **Satuan Data:** Ribu Penumpang
 """)
 
-st.write("")      # 1 enter
+    st.write("")
 
     with st.expander("📊 Evaluasi & Pemilihan Model", expanded=False):
 
