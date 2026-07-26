@@ -124,7 +124,7 @@ section[data-testid="stSidebar"] details summary:hover{
     padding:18px;
     text-align:center;
     box-shadow:0 2px 6px rgba(0,0,0,.06);
-    height:90px;
+    height:115px;
 }
 
 .metric-icon{
@@ -444,6 +444,8 @@ with col_ctrl2:
     )
 
     forecast_steps = horizon_mapping[selected_horizon_label]
+
+st.write("")      # 1 enter
 # ==========================================
 # 5. FORECASTING COMPUTATION
 # ==========================================
