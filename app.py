@@ -336,16 +336,15 @@ with header_col2:
         """
         <h2 style="
             margin:0;
-            padding:0;
             color:#002D62;
-            line-height:1.2;
+            line-height:1.25;
         ">
             Forecasting Penumpang Kereta Api
         </h2>
 
         <p style="
-            margin-top:4px;
-            margin-bottom:8px;
+            margin-top:8px;
+            margin-bottom:12px;
             color:#6B7280;
             font-size:15px;
         ">
@@ -353,8 +352,8 @@ with header_col2:
         </p>
 
         <hr style="
-            margin:6px 0 8px 0;
-            border:0;
+            margin:12px 0 12px 0;
+            border:none;
             border-top:1px solid #E5E7EB;
         ">
         """,
