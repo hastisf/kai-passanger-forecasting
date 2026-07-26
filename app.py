@@ -569,39 +569,26 @@ col1, col2, col3 = st.columns(3)
 with col1:
     st.markdown(f"""
     <div class="metric-card">
-        <div class="metric-icon">📉</div>
         <div class="metric-label">Forecast Minimum</div>
-        <div class="metric-value">
-            {forecast_series.min():,.0f}
-            <span>Ribu</span>
-        </div>
+        <div class="metric-value">{forecast_series.min():,.0f} <span>Ribu</span></div>
     </div>
     """, unsafe_allow_html=True)
 
 with col2:
     st.markdown(f"""
     <div class="metric-card">
-        <div class="metric-icon">📊</div>
         <div class="metric-label">Forecast Rata-rata</div>
-        <div class="metric-value">
-            {forecast_series.mean():,.0f}
-            <span>Ribu</span>
-        </div>
+        <div class="metric-value">{forecast_series.mean():,.0f} <span>Ribu</span></div>
     </div>
     """, unsafe_allow_html=True)
 
 with col3:
     st.markdown(f"""
     <div class="metric-card">
-        <div class="metric-icon">📈</div>
         <div class="metric-label">Forecast Maksimum</div>
-        <div class="metric-value">
-            {forecast_series.max():,.0f}
-            <span>Ribu</span>
-        </div>
+        <div class="metric-value">{forecast_series.max():,.0f} <span>Ribu</span></div>
     </div>
     """, unsafe_allow_html=True)
-
 st.write("")      # 1 enter
 st.write("")      # 1 enter
 
