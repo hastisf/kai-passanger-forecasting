@@ -563,8 +563,6 @@ with col3:
 
 st.subheader(f"📈 Historis & Forecast Penumpang - {selected_display}")
 
-st.subheader(f"📈 Historis & Forecast Penumpang - {selected_display}")
-
 fig, ax = plt.subplots(figsize=(12, 5))
 plot_hist = region_data.loc["2021-01-01":]
 
