@@ -124,7 +124,7 @@ section[data-testid="stSidebar"] details summary:hover{
     padding:18px;
     text-align:center;
     box-shadow:0 2px 6px rgba(0,0,0,.06);
-    height:115px;
+    height:125px;
 }
 
 .metric-icon{
@@ -321,7 +321,7 @@ with st.sidebar:
 * **Satuan Data:** Ribu Penumpang
 """)
 
-    st.markdown("---")
+st.write("")      # 1 enter
 
     with st.expander("📊 Evaluasi & Pemilihan Model", expanded=False):
 
