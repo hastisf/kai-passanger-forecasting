@@ -309,7 +309,7 @@ with st.sidebar:
 
     with st.expander("", expanded=False):
 
-    st.markdown("""
+        st.markdown("""
 | Model | MAE | RMSE | MAPE |
 |:---|---:|---:|---:|
 | Random Forest | 8,904.91 | 10,147.50 | **21.02%** |
@@ -320,7 +320,7 @@ with st.sidebar:
 | Prophet | 32,427.39 | 34,950.11 | 80.84% |
 """)
 
-    st.info("""
+        st.info("""
 **Mengapa SARIMA dipilih?**
 
 • Random Forest memiliki error paling rendah, namun hasil forecast jangka panjang kurang realistis.
@@ -329,7 +329,7 @@ with st.sidebar:
 
 • **SARIMA dipilih** karena mampu mempertahankan pola tren dan musiman sehingga menghasilkan forecast yang paling representatif.
 """)
-# ==========================================
+    # ==========================================
 # 4. MAIN CONTENT DASHBOARD
 # ==========================================
 header_col1, header_col2 = st.columns([1,6])
