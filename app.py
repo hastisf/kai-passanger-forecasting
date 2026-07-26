@@ -225,32 +225,30 @@ with st.sidebar:
     * **Satuan Data:** Ribu Penumpang
     """)
 
-with st.expander("📊 Evaluasi & Pemilihan Model", expanded=False):
+    st.markdown("---")
 
-    st.markdown("""
-**Perbandingan Kinerja Model**
+    with st.expander("📊 Evaluasi & Pemilihan Model", expanded=False):
 
+        st.markdown("""
 | Model | MAE | RMSE | MAPE |
 |:---|---:|---:|---:|
 | Random Forest | 8,904.91 | 10,147.50 | **21.02%** |
 | XGBoost | 12,002.28 | 13,997.90 | 27.93% |
-| SARIMA ✅ | 17,373.61 | 19,145.57 | 42.60% |
+| **SARIMA** | 17,373.61 | 19,145.57 | 42.60% |
 | ARIMA | 18,410.88 | 20,149.45 | 45.34% |
 | Holt-Winters | 20,101.08 | 22,193.01 | 49.22% |
 | Prophet | 32,427.39 | 34,950.11 | 80.84% |
-""")
+        """)
 
-    st.info(
-        """
+        st.info("""
 **Mengapa SARIMA dipilih?**
 
-• Random Forest memiliki MAPE paling rendah, namun menghasilkan forecast jangka panjang yang kurang realistis dan tidak mengikuti pola musiman data.
+• Random Forest memiliki error paling rendah, namun hasil forecast jangka panjang kurang realistis.
 
-• XGBoost, Prophet, dan Holt-Winters menghasilkan prediksi yang lebih fluktuatif serta menyimpang dari tren historis.
+• XGBoost, Prophet, dan Holt-Winters menghasilkan prediksi yang lebih fluktuatif.
 
-• **SARIMA dipilih sebagai model utama** karena mampu mempertahankan pola tren dan musiman sehingga menghasilkan forecast yang paling konsisten dengan karakteristik data penumpang kereta api.
-"""
-    )
+• **SARIMA dipilih** karena mampu mempertahankan pola tren dan musiman sehingga menghasilkan forecast yang paling representatif.
+""")
 
 # ==========================================
 # 4. MAIN CONTENT DASHBOARD
@@ -279,7 +277,6 @@ with col_header2:
     """, unsafe_allow_html=True)
 
 st.markdown("---")
-
 
 # ==========================================
 # FILTER
