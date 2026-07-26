@@ -535,20 +535,25 @@ with col3:
 # 9. FOOTER
 # ==========================================
 st.markdown("""
-<div class="footer">
+<hr>
 
-© 2026 Hasti Sri Fatmawati
+<div style="
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:8px 0;
+font-size:14px;
+flex-wrap:wrap;
+">
+
+<span>© 2026 <b>Hasti Sri Fatmawati</b></span>
 
 <a href="https://www.linkedin.com/in/hasti-sri-fatmawati-361b49417/" target="_blank">
-<img src="https://cdn-icons-png.flaticon.com/512/174/174857.png"
-width="18">
+LinkedIn
 </a>
 
-&nbsp;
-
 <a href="https://github.com/hastisf" target="_blank">
-<img src="https://cdn-icons-png.flaticon.com/512/25/25231.png"
-width="18">
+GitHub
 </a>
 
 </div>
