@@ -292,9 +292,7 @@ with st.sidebar:
   * **Rentang Data Historis:** Jan 2006 – Mei 2026
   * **Satuan Data:** Ribu Penumpang
   """)
-
-  st.markdown("---")
-
+  
   with st.expander("📊 Evaluasi & Pemilihan Model", expanded=False):
 
     st.markdown("""
