@@ -272,7 +272,6 @@ df_historical = df_historical.sort_index()
 # 3. SIDEBAR NAVIGATION & INFO PANEL
 # ==========================================
 with st.sidebar:
-  st.markdown("---")
 
   st.markdown("### 📌 Informasi Model")
 
@@ -292,6 +291,7 @@ with st.sidebar:
   * **Rentang Data Historis:** Jan 2006 – Mei 2026
   * **Satuan Data:** Ribu Penumpang
   """)
+
   
   with st.expander("📊 Evaluasi & Pemilihan Model", expanded=False):
 
