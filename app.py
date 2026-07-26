@@ -477,12 +477,12 @@ st.pyplot(fig)
 # ==========================================
 # 8. DATA TABLE DISPLAY
 # ==========================================
-st.subheader("📋 Tabel Nilai Hasil Prediksi")
+st.subheader("📋 Hasil Forecast")
 
 df_forecast_res = pd.DataFrame({
-    "No": range(1, len(forecast_series)+1),
+    "No": range(1, len(forecast_series) + 1),
     "Periode": forecast_series.index.strftime("%b %Y"),
-    "Prediksi (Ribu)": forecast_series.values.round(2),
+    "Prediksi (Ribu Penumpang)": forecast_series.values.round(2),
 })
 
 st.dataframe(
@@ -491,45 +491,45 @@ st.dataframe(
     height=260,
 )
 
-  st.markdown(
-f"""
-<div style="background-color:#FFFFFF;
-padding:18px;
-border-radius:10px;
-border:1px solid #E2E8F0;">
+total_pred = forecast_series.sum()
+avg_pred = forecast_series.mean()
 
-<h4 style="margin-top:0;color:#002D62;">
-📌 Ringkasan Forecast
-</h4>
+st.markdown("<br>", unsafe_allow_html=True)
 
-<b>Periode Forecast</b><br>
-{forecast_series.index[0].strftime('%b %Y')} -
-{forecast_series.index[-1].strftime('%b %Y')}
+col1, col2, col3 = st.columns(3)
 
-<hr>
+with col1:
+    st.markdown(f"""
+    <div class="metric-card">
+        <div class="metric-label">📅 Periode Prediksi</div>
+        <div class="metric-value" style="font-size:18px;color:#002D62;">
+            {forecast_series.index[0].strftime('%b %Y')} - {forecast_series.index[-1].strftime('%b %Y')}
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
 
-<b>Total Prediksi</b><br>
-<span style="font-size:22px;
-color:#FF5722;
-font-weight:bold;">
-{total_pred:,.2f}
-</span>
-Ribu Penumpang
+with col2:
+    st.markdown(f"""
+    <div class="metric-card">
+        <div class="metric-label">🚆 Total Prediksi</div>
+        <div class="metric-value">
+            {total_pred:,.2f}
+        </div>
+        <div class="metric-label">Ribu Penumpang</div>
+    </div>
+    """, unsafe_allow_html=True)
 
-<br><br>
-
-<b>Rata-rata Bulanan</b><br>
-<span style="font-size:22px;
-color:#002D62;
-font-weight:bold;">
-{avg_pred:,.2f}
-</span>
-Ribu Penumpang
-
-</div>
-""",
-unsafe_allow_html=True)
-
+with col3:
+    st.markdown(f"""
+    <div class="metric-card">
+        <div class="metric-label">📊 Rata-rata per Bulan</div>
+        <div class="metric-value">
+            {avg_pred:,.2f}
+        </div>
+        <div class="metric-label">Ribu Penumpang</div>
+    </div>
+    """, unsafe_allow_html=True)
+  
 # ==========================================
 # 9. FOOTER
 # ==========================================
