@@ -284,27 +284,30 @@ df_historical = df_historical.sort_index()
 # ==========================================
 with st.sidebar:
 
-  st.markdown("### 📌 Informasi Model")
+    st.markdown("### 📌 Informasi Model")
 
-  st.markdown(
-      """
-    <div class="info-card">
-        <strong>Tujuan Aplikasi:</strong><br>
-        Memprediksi jumlah penumpang Kereta Api di Indonesia untuk membantu perencanaan operasional, kapasitas armada, dan strategi bisnis PT KAI.
-    </div>
-    """,
-      unsafe_allow_html=True,
-  )
+    st.markdown(
+        """
+        <div class="info-card">
+            <strong>Tujuan Aplikasi:</strong><br>
+            Memprediksi jumlah penumpang Kereta Api di Indonesia untuk membantu perencanaan operasional, kapasitas armada, dan strategi bisnis PT KAI.
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
 
-  st.markdown("""
-  * **Algoritma Utama:** SARIMA (Seasonal ARIMA)
-  * **Dataset:** Badan Pusat Statistik
-  * **Rentang Data Historis:** Jan 2006 – Mei 2026
-  * **Satuan Data:** Ribu Penumpang
-  """)
+    st.markdown("""
+* **Algoritma Utama:** SARIMA (Seasonal ARIMA)
+* **Dataset:** Badan Pusat Statistik
+* **Rentang Data Historis:** Jan 2006 – Mei 2026
+* **Satuan Data:** Ribu Penumpang
+""")
 
-  
-  with st.expander("📊 Evaluasi & Pemilihan Model", expanded=False):
+    st.markdown("---")
+
+    st.markdown("### 📊 Evaluasi & Pemilihan Model")
+
+    with st.expander("", expanded=False):
 
     st.markdown("""
 | Model | MAE | RMSE | MAPE |
