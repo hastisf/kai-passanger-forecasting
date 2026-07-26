@@ -107,7 +107,7 @@ LOGO_PATH = "logo.png"
 # ==========================================
 @st.cache_data
 def load_historical_data():
-    data_path = "target_info.csv"
+    data_path = "streamlit_data.csv"
 
     if os.path.exists(data_path):
         try:
