@@ -599,6 +599,8 @@ with col3:
     </div>
     """, unsafe_allow_html=True)
 
+st.write("")      # 1 enter
+
 st.subheader(f"📈 Historis & Forecast Penumpang - {selected_display}")
 
 fig, ax = plt.subplots(figsize=(12, 5))
