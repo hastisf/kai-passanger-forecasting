@@ -22,6 +22,7 @@ st.set_page_config(
     page_title="Forecasting Penumpang Kereta Api - KAI",
     page_icon=page_logo,
     layout="wide",
+    initial_sidebar_state="expanded"
 )
 
 # ==========================================
