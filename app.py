@@ -225,85 +225,103 @@ with st.sidebar:
     * **Satuan Data:** Ribu Penumpang
     """)
 
-st.expander("💡 Mengapa Memilih SARIMA?", expanded=False).markdown("""
-### Hasil Evaluasi Model
+with st.expander("📊 Evaluasi & Pemilihan Model", expanded=False):
+
+    st.markdown("""
+**Perbandingan Kinerja Model**
 
 | Model | MAE | RMSE | MAPE |
-|:------|----:|-----:|-----:|
+|:---|---:|---:|---:|
 | Random Forest | 8,904.91 | 10,147.50 | **21.02%** |
 | XGBoost | 12,002.28 | 13,997.90 | 27.93% |
-| **SARIMA** | 17,373.61 | 19,145.57 | 42.60% |
+| SARIMA ✅ | 17,373.61 | 19,145.57 | 42.60% |
 | ARIMA | 18,410.88 | 20,149.45 | 45.34% |
 | Holt-Winters | 20,101.08 | 22,193.01 | 49.22% |
 | Prophet | 32,427.39 | 34,950.11 | 80.84% |
-
-### Alasan Pemilihan
-
-- **Random Forest** memiliki nilai error paling kecil, namun hasil forecast jangka panjang kurang realistis.
-- **XGBoost, Prophet, dan Holt-Winters** menghasilkan prediksi yang lebih fluktuatif dan menyimpang dari pola historis.
-- **SARIMA** mampu mempertahankan pola tren dan musiman sehingga menghasilkan proyeksi yang lebih masuk akal untuk data time series penumpang kereta api.
-
-> **Catatan:** Model yang ditampilkan pada aplikasi menggunakan **SARIMA** karena memberikan pola prediksi yang paling representatif, meskipun bukan model dengan nilai error terendah.
 """)
+
+    st.info(
+        """
+**Mengapa SARIMA dipilih?**
+
+• Random Forest memiliki MAPE paling rendah, namun menghasilkan forecast jangka panjang yang kurang realistis dan tidak mengikuti pola musiman data.
+
+• XGBoost, Prophet, dan Holt-Winters menghasilkan prediksi yang lebih fluktuatif serta menyimpang dari tren historis.
+
+• **SARIMA dipilih sebagai model utama** karena mampu mempertahankan pola tren dan musiman sehingga menghasilkan forecast yang paling konsisten dengan karakteristik data penumpang kereta api.
+"""
+    )
 
 # ==========================================
 # 4. MAIN CONTENT DASHBOARD
 # ==========================================
-col_header1, col_header2 = st.columns([1, 5])
+col_header1, col_header2 = st.columns([0.6, 5.4])
+
 with col_header1:
-  if os.path.exists(LOGO_PATH):
-    st.image(LOGO_PATH, width=110)
-  else:
-    st.image(
-        "https://upload.wikimedia.org/wikipedia/commons/5/5D/Logo_PT_Kereta_Api_Indonesia_%28Persero%29_2020.svg",
-        width=110,
-    )
+    if os.path.exists(LOGO_PATH):
+        st.image(LOGO_PATH, width=85)
+    else:
+        st.image(
+            "https://upload.wikimedia.org/wikipedia/commons/5/5D/Logo_PT_Kereta_Api_Indonesia_%28Persero%29_2020.svg",
+            width=85,
+        )
 
 with col_header2:
-  st.title("Forecasting Penumpang Kereta Api")
-  st.caption(
-      "Dashboard Prediksi Volume Penumpang Kereta Api Berbasis Model Time"
-      " Series SARIMA "
-  )
+    st.markdown("""
+    <div style="padding-top:8px;">
+        <h1 style="margin-bottom:0;">
+            Forecasting Penumpang Kereta Api
+        </h1>
+        <p style="margin-top:3px;color:#6c757d;">
+            Dashboard Prediksi Volume Penumpang Kereta Api Berbasis Model SARIMA
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
 
 st.markdown("---")
 
-# Dropdown Selection
-col_ctrl1, col_ctrl2 = st.columns(2)
+
+# ==========================================
+# FILTER
+# ==========================================
+col_ctrl1, col_ctrl2 = st.columns([1.3, 0.7])
 
 with col_ctrl1:
- target_columns = list(df_historical.columns)
 
-region_mapping = {
-    col: col.replace("_ribu", "")
-            .replace("_", " ")
-            .title()
-    for col in target_columns
-}
+    target_columns = list(df_historical.columns)
 
-display_mapping = {
-    v: k for k, v in region_mapping.items()
-}
+    region_mapping = {
+        col: col.replace("_ribu", "")
+                .replace("_", " ")
+                .title()
+        for col in target_columns
+    }
 
-selected_display = st.selectbox(
-    "📍 Pilih Wilayah / Rute",
-    list(display_mapping.keys())
-)
+    display_mapping = {
+        v: k for k, v in region_mapping.items()
+    }
 
-target = display_mapping[selected_display]
+    selected_display = st.selectbox(
+        "📍 Wilayah",
+        list(display_mapping.keys())
+    )
 
+    target = display_mapping[selected_display]
 
 with col_ctrl2:
-  horizon_mapping = {
-      "6 Bulan (Short-term)": 6,
-      "1 Tahun / 12 Bulan (Medium-term)": 12,
-      "2 Tahun / 24 Bulan (Long-term)": 24,
-  }
-  selected_horizon_label = st.selectbox(
-      "⏱️ Pilih Horizon Forecasting:", list(horizon_mapping.keys())
-  )
-  forecast_steps = horizon_mapping[selected_horizon_label]
 
+    horizon_mapping = {
+        "6 Bulan": 6,
+        "12 Bulan": 12,
+        "24 Bulan": 24,
+    }
+
+    selected_horizon_label = st.selectbox(
+        "📅 Rentang Prediksi",
+        list(horizon_mapping.keys())
+    )
+
+    forecast_steps = horizon_mapping[selected_horizon_label]
 # ==========================================
 # 5. FORECASTING COMPUTATION
 # ==========================================
@@ -418,7 +436,7 @@ st.markdown("<br>", unsafe_allow_html=True)
 # ==========================================
 # 7. VISUALIZATION
 # ==========================================
-st.subheader(f"📈 Grafik Historis & Forecast Penumpang - {selected_display}")
+st.subheader(f"📈 Historis & Forecast Penumpang - {selected_display}")
 
 fig, ax = plt.subplots(figsize=(12, 5))
 plot_hist = region_data.loc["2021-01-01":]
@@ -426,18 +444,19 @@ plot_hist = region_data.loc["2021-01-01":]
 ax.plot(
     plot_hist.index,
     plot_hist.values,
-    label="Data Historis (BPS)",
+    label="Historis",
     color="#002D62",
     linewidth=2.2,
 )
 ax.plot(
     forecast_series.index,
     forecast_series.values,
-    label=f"Forecast SARIMA ({forecast_steps} Bulan)",
+    label="Forecast",
     color="#FF5722",
     linestyle="--",
     marker="o",
-    linewidth=2,
+    linewidth=2.8,
+    markersize=5,
 )
 ax.axvline(
     x=region_data.index[-1],
@@ -465,8 +484,9 @@ st.pyplot(fig)
 st.subheader("📋 Tabel Nilai Hasil Prediksi")
 
 df_forecast_res = pd.DataFrame({
-    "Bulan": forecast_series.index.strftime("%Y-%m"),
-    "Prediksi Penumpang (Ribu)": forecast_series.values.round(2),
+    "No": range(1, len(forecast_series)+1),
+    "Periode": forecast_series.index.strftime("%b %Y"),
+    "Prediksi (Ribu)": forecast_series.values.round(2),
 })
 
 col_tbl1, col_tbl2 = st.columns([2, 1])
@@ -478,26 +498,63 @@ with col_tbl2:
   avg_pred = forecast_series.mean()
 
   st.markdown(
-      f"""
-    <div style="background-color:#FFFFFF; padding:15px; border-radius:8px; border:1px solid #E2E8F0;">
-        <h4 style="margin-top:0; color:#002D62;"> Ringkasan Forecast</h4>
-        <p><b>Total Volume ({forecast_steps} Bln):</b><br>
-        <span style="font-size:18px; color:#FF5722; font-weight:bold;">{total_pred:,.2f} Ribu</span></p>
-        <p><b>Rata-rata per Bulan:</b><br>
-        <span style="font-size:18px; color:#002D62; font-weight:bold;">{avg_pred:,.2f} Ribu</span></p>
-    </div>
-    """,
-      unsafe_allow_html=True,
-  )
+f"""
+<div style="background-color:#FFFFFF;
+padding:18px;
+border-radius:10px;
+border:1px solid #E2E8F0;">
+
+<h4 style="margin-top:0;color:#002D62;">
+📌 Ringkasan Forecast
+</h4>
+
+<b>Periode Forecast</b><br>
+{forecast_series.index[0].strftime('%b %Y')} -
+{forecast_series.index[-1].strftime('%b %Y')}
+
+<hr>
+
+<b>Total Prediksi</b><br>
+<span style="font-size:22px;
+color:#FF5722;
+font-weight:bold;">
+{total_pred:,.2f}
+</span>
+Ribu Penumpang
+
+<br><br>
+
+<b>Rata-rata Bulanan</b><br>
+<span style="font-size:22px;
+color:#002D62;
+font-weight:bold;">
+{avg_pred:,.2f}
+</span>
+Ribu Penumpang
+
+</div>
+""",
+unsafe_allow_html=True)
 
 # ==========================================
 # 9. FOOTER
 # ==========================================
-st.markdown(
-    """
+st.markdown("""
 <div class="footer">
-    © 2026 Hasti Sri Fatmawati. All Rights Reserved.
+
+© 2026 Hasti Sri Fatmawati
+
+<a href="https://www.linkedin.com/in/hasti-sri-fatmawati-361b49417/" target="_blank">
+<img src="https://cdn-icons-png.flaticon.com/512/174/174857.png"
+width="18">
+</a>
+
+&nbsp;
+
+<a href="https://github.com/hastisf" target="_blank">
+<img src="https://cdn-icons-png.flaticon.com/512/25/25231.png"
+width="18">
+</a>
+
 </div>
-""",
-    unsafe_allow_html=True,
-)
+""", unsafe_allow_html=True)
