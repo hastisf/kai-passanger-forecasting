@@ -154,15 +154,14 @@ footer{
 # ==========================================
 st.markdown("""
 <style>
-button[kind="header"]{
-    color:#002D62 !important;
+button[kind="header"] {
+    color: #F57C00 !important;
 }
 
-[data-testid="collapsedControl"]{
-    color:#002D62 !important;
-    background:white !important;
-    border-radius:6px;
-    padding:4px;
+[data-testid="collapsedControl"] {
+    color: #F57C00 !important;
+    background-color: white !important;
+    border-radius: 6px;
 }
 </style>
 """, unsafe_allow_html=True)
