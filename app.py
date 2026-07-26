@@ -114,9 +114,20 @@ def load_historical_data():
             df = pd.read_csv(data_path)
 
             # DEBUG
-            st.write("Nama file:", data_path)
             st.write("Kolom:", df.columns.tolist())
             st.dataframe(df.head())
+
+            date_cols = [
+                c
+                for c in df.columns
+                if c.lower() in ["bulan", "periode", "date", "tanggal", "unnamed: 0"]
+            ]
+
+            if date_cols:
+                df[date_cols[0]] = pd.to_datetime(
+                    df[date_cols[0]],
+                    errors="coerce"
+                )
 
       # 1. Cari & Atur Kolom Tanggal/Periode sebagai Index
       date_cols = [
