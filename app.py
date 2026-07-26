@@ -305,9 +305,7 @@ with st.sidebar:
 
     st.markdown("---")
 
-    st.markdown("#### 📊 Evaluasi & Pemilihan Model")
-
-    with st.expander("", expanded=False):
+    with st.expander("📊 Evaluasi & Pemilihan Model", expanded=False):
 
         st.markdown("""
 | Model | MAE | RMSE | MAPE |
@@ -329,6 +327,7 @@ with st.sidebar:
 
 • **SARIMA dipilih** karena mampu mempertahankan pola tren dan musiman sehingga menghasilkan forecast yang paling representatif.
 """)
+
     # ==========================================
 # 4. MAIN CONTENT DASHBOARD
 # ==========================================
