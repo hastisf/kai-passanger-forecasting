@@ -320,7 +320,7 @@ with st.sidebar:
 # ==========================================
 # 4. MAIN CONTENT DASHBOARD
 # ==========================================
-header_col1, header_col2 = st.columns([1,3])
+header_col1, header_col2 = st.columns([1,6])
 
 with header_col1:
     if os.path.exists(LOGO_PATH):
