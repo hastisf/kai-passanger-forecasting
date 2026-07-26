@@ -112,25 +112,43 @@ section[data-testid="stSidebar"] details summary:hover{
     color:#F57C00 !important;
 }
 
-/* Metric Card */
+/* ===========================
+   Metric Card
+=========================== */
+
 .metric-card{
     background:#FFFFFF;
     border:1px solid #E2E8F0;
-    border-radius:10px;
-    padding:15px;
+    border-left:5px solid #F57C00;
+    border-radius:12px;
+    padding:18px;
     text-align:center;
-    box-shadow:0 2px 4px rgba(0,0,0,.04);
+    box-shadow:0 2px 6px rgba(0,0,0,.06);
+    height:135px;
+}
+
+.metric-icon{
+    font-size:28px;
+    margin-bottom:8px;
+}
+
+.metric-label{
+    font-size:15px;
+    color:#6B7280;
+    margin-bottom:6px;
+    font-weight:600;
 }
 
 .metric-value{
     font-size:22px;
-    font-weight:bold;
-    color:#FF5722;
+    font-weight:700;
+    color:#002D62;
 }
 
-.metric-label{
-    font-size:13px;
-    color:#64748B;
+.metric-value span{
+    font-size:14px;
+    font-weight:500;
+    color:#6B7280;
 }
 
 /* Footer */
@@ -539,27 +557,47 @@ st.markdown("<br>", unsafe_allow_html=True)
 # ==========================================
 # 7. VISUALIZATION
 # ==========================================
-# forecast_series sudah dibuat sebelumnya
+
+# RINGKASAN FORECAST
+st.subheader("📊 Ringkasan Forecast")
 
 col1, col2, col3 = st.columns(3)
 
 with col1:
-    st.metric(
-        "Forecast Minimum",
-        f"{forecast_series.min():,.0f} Ribu"
-    )
+    st.markdown(f"""
+    <div class="metric-card">
+        <div class="metric-icon">📉</div>
+        <div class="metric-label">Forecast Minimum</div>
+        <div class="metric-value">
+            {forecast_series.min():,.0f}
+            <span>Ribu</span>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
 
 with col2:
-    st.metric(
-        "Forecast Rata-rata",
-        f"{forecast_series.mean():,.0f} Ribu"
-    )
+    st.markdown(f"""
+    <div class="metric-card">
+        <div class="metric-icon">📊</div>
+        <div class="metric-label">Forecast Rata-rata</div>
+        <div class="metric-value">
+            {forecast_series.mean():,.0f}
+            <span>Ribu</span>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
 
 with col3:
-    st.metric(
-        "Forecast Maksimum",
-        f"{forecast_series.max():,.0f} Ribu"
-    )
+    st.markdown(f"""
+    <div class="metric-card">
+        <div class="metric-icon">📈</div>
+        <div class="metric-label">Forecast Maksimum</div>
+        <div class="metric-value">
+            {forecast_series.max():,.0f}
+            <span>Ribu</span>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
 
 st.subheader(f"📈 Historis & Forecast Penumpang - {selected_display}")
 
