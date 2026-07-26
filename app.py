@@ -107,10 +107,16 @@ LOGO_PATH = "logo.png"
 # ==========================================
 @st.cache_data
 def load_historical_data():
-  data_path = "target_info.csv"
-  if os.path.exists(data_path):
-    try:
-      df = pd.read_csv(data_path)
+    data_path = "target_info.csv"
+
+    if os.path.exists(data_path):
+        try:
+            df = pd.read_csv(data_path)
+
+            # DEBUG
+            st.write("Nama file:", data_path)
+            st.write("Kolom:", df.columns.tolist())
+            st.dataframe(df.head())
 
       # 1. Cari & Atur Kolom Tanggal/Periode sebagai Index
       date_cols = [
@@ -225,7 +231,7 @@ with col_header2:
   st.title("Forecasting Penumpang Kereta Api")
   st.caption(
       "Dashboard Prediksi Volume Penumpang Kereta Api Berbasis Model Time"
-      " Series SARIMA"
+      " Series SARIMA (Sumber Data: BPS)"
   )
 
 st.markdown("---")
