@@ -117,77 +117,87 @@ def load_historical_data():
             st.write("Kolom:", df.columns.tolist())
             st.dataframe(df.head())
 
+            # Cari kolom tanggal
             date_cols = [
-                c
-                for c in df.columns
+                c for c in df.columns
                 if c.lower() in ["bulan", "periode", "date", "tanggal", "unnamed: 0"]
             ]
 
             if date_cols:
-                df[date_cols[0]] = pd.to_datetime(
-                    df[date_cols[0]],
-                    errors="coerce"
-                )
+                df[date_cols[0]] = pd.to_datetime(df[date_cols[0]], errors="coerce")
+                df = df.dropna(subset=[date_cols[0]])
+                df = df.set_index(date_cols[0])
+            else:
+                df.index = pd.to_datetime(df.index, errors="coerce")
 
-      # 1. Cari & Atur Kolom Tanggal/Periode sebagai Index
-      date_cols = [
-          c
-          for c in df.columns
-          if c.lower() in ["bulan", "periode", "date", "tanggal", "unnamed: 0"]
-      ]
-      if date_cols:
-        df[date_cols[0]] = pd.to_datetime(df[date_cols[0]], errors="coerce")
-        df = df.dropna(subset=[date_cols[0]])
-        df = df.set_index(date_cols[0])
-      else:
-        df.index = pd.to_datetime(df.index, errors="coerce")
+            # Ubah semua kolom menjadi numerik
+            for col in df.columns:
+                if df[col].dtype == "object":
+                    df[col] = (
+                        df[col]
+                        .astype(str)
+                        .str.replace(",", ".")
+                        .str.strip()
+                    )
 
-      # 2. PAKSA SEMUA KOLOM JADI NUMERIK / FLOAT (Mencegah Error String)
-      for col in df.columns:
-        if df[col].dtype == "object":
-          # Hapus spasi dan ganti koma jika ada
-          df[col] = df[col].astype(str).str.replace(",", ".").str.strip()
-        df[col] = pd.to_numeric(df[col], errors="coerce")
+                df[col] = pd.to_numeric(df[col], errors="coerce")
 
-      # Isi data bernilai NaN jika ada hasil gagal konversi
-      df = df.ffill().bfill()
+            df = df.ffill().bfill()
 
-      return df
-    except Exception:
-      pass
+            return df
 
-  # Fallback Data Sintetis (Terkonversi Aman)
-  dates = pd.date_range(start="2006-01-01", end="2026-05-01", freq="MS")
-  np.random.seed(42)
-  n = len(dates)
+        except Exception as e:
+            st.error(e)
 
-  t = np.linspace(0, 10, n)
-  trend = 15000 + 1500 * t + 800 * np.sin(2 * np.pi * t)
+    # ================= Fallback =================
+    dates = pd.date_range(
+        start="2006-01-01",
+        end="2026-05-01",
+        freq="MS"
+    )
 
-  covid_mask = (dates >= "2020-03-01") & (dates <= "2021-12-01")
-  trend[covid_mask] *= 0.35
+    np.random.seed(42)
 
-  noise = np.random.normal(0, 500, n)
-  nasional = np.maximum(trend + noise, 2000)
+    n = len(dates)
 
-  jabodetabek = nasional * 0.72
-  non_jabodetabek = nasional * 0.23
-  jawa = jabodetabek + non_jabodetabek
-  sumatera = nasional * 0.05
+    t = np.linspace(0, 10, n)
 
-  return pd.DataFrame(
-      {
-        "nasional_ribu": nasional,
-    	"jabodetabek_ribu": jabodetabek,
-    	"non_jabodetabek_ribu": non_jabodetabek,
-    	"jawa_ribu": jawa,
-    	"sumatera_ribu": sumatera,
-      },
-      index=dates,
-  )
+    trend = 15000 + 1500 * t + 800 * np.sin(2 * np.pi * t)
 
+    covid_mask = (
+        (dates >= "2020-03-01") &
+        (dates <= "2021-12-01")
+    )
+
+    trend[covid_mask] *= 0.35
+
+    noise = np.random.normal(0, 500, n)
+
+    nasional = np.maximum(trend + noise, 2000)
+
+    jabodetabek = nasional * 0.72
+    non_jabodetabek = nasional * 0.23
+    jawa = jabodetabek + non_jabodetabek
+    sumatera = nasional * 0.05
+
+    return pd.DataFrame(
+        {
+            "nasional_ribu": nasional,
+            "jabodetabek_ribu": jabodetabek,
+            "non_jabodetabek_ribu": non_jabodetabek,
+            "jawa_ribu": jawa,
+            "sumatera_ribu": sumatera,
+        },
+        index=dates,
+    )
+
+# ==========================
+# LOAD DATA
+# ==========================
 df_historical = load_historical_data()
+
 df_historical.index = pd.to_datetime(df_historical.index)
+
 df_historical = df_historical.sort_index()
 
 # ==========================================
