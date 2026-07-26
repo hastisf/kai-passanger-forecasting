@@ -541,20 +541,31 @@ st.markdown("""
 display:flex;
 justify-content:space-between;
 align-items:center;
-padding:8px 0;
 font-size:14px;
+color:#6c757d;
+padding:8px 0;
 flex-wrap:wrap;
 ">
 
-<span>© 2026 <b>Hasti Sri Fatmawati</b></span>
+<div>
+© 2026 <b>Hasti Sri Fatmawati</b>
+</div>
 
-<a href="https://www.linkedin.com/in/hasti-sri-fatmawati-361b49417/" target="_blank">
-LinkedIn
+<div>
+<a href="https://www.linkedin.com/in/hasti-sri-fatmawati-361b49417/"
+target="_blank"
+style="text-decoration:none;">
+💼 LinkedIn
 </a>
+</div>
 
-<a href="https://github.com/hastisf" target="_blank">
-GitHub
+<div>
+<a href="https://github.com/hastisf"
+target="_blank"
+style="text-decoration:none;">
+💻 GitHub
 </a>
+</div>
 
 </div>
 """, unsafe_allow_html=True)
