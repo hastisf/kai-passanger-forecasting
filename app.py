@@ -20,88 +20,136 @@ else:
 # ==========================================
 st.set_page_config(
     page_title="Forecasting Penumpang Kereta Api - KAI",
-    page_icon=page_logo,  
+    page_icon=page_logo,
     layout="wide",
 )
 
-# Custom CSS matching KAI Branding & Clean UI Layout
-st.markdown(
-    """
+# ==========================================
+# CUSTOM CSS
+# ==========================================
+st.markdown("""
 <style>
-    /* Primary Colors & Typography */
-    .stApp {
-        background-color: #F8F9FA;
-    }
-    
-    /* Sidebar Styling */
-    [data-testid="stSidebar"] {
-        background-color: #FFFFFF;
-        border-right: 1px solid #E9ECEF;
-        padding-top: 1rem;
-    }
-    
-    /* Headers & Text */
-    h1, h2, h3 {
-        color: #002D62; /* KAI Deep Navy Blue */
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
-    
-    /* Info Box Styling */
-    .info-card {
-        background-color: #EBF3FA;
-        border-left: 5px solid #002D62;
-        padding: 15px;
-        border-radius: 8px;
-        margin-bottom: 20px;
-        color: #1A2530;
-    }
-    
-    /* Metric Cards */
-    .metric-card {
-        background-color: #FFFFFF;
-        border: 1px solid #E2E8F0;
-        border-radius: 10px;
-        padding: 15px;
-        text-align: center;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.04);
-    }
-    .metric-value {
-        font-size: 22px;
-        font-weight: bold;
-        color: #FF5722; /* KAI Accent Orange */
-    }
-    .metric-label {
-        font-size: 13px;
-        color: #64748B;
-    }
-    
-    /* Footer Styling */
-    .footer {
-        position: fixed;
-        left: 0;
-        bottom: 0;
-        width: 100%;
-        background-color: #FFFFFF;
-        color: #6C757D;
-        text-align: right;
-        padding: 8px 30px;
-        font-size: 12px;
-        border-top: 1px solid #E9ECEF;
-        z-index: 999;
-    }
-    
-    /* Hide Streamlit Default Elements */
-    #MainMenu {visibility: hidden;}
-    footer {visibility: hidden;}
+
+/* Paksa menggunakan tema terang */
+html{
+    color-scheme: light;
+}
+
+/* Background */
+.stApp{
+    background:#F8F9FA;
+}
+
+/* Sidebar */
+[data-testid="stSidebar"]{
+    background:#FFFFFF;
+    border-right:1px solid #E9ECEF;
+    padding-top:1rem;
+}
+
+/* ===========================
+   FORCE TEXT COLOR
+=========================== */
+
+/* Semua tulisan */
+.stApp,
+.stApp p,
+.stApp span,
+.stApp div,
+.stApp small,
+.stApp label,
+.stApp li{
+    color:#1F2937 !important;
+}
+
+/* Semua heading */
+.stApp h1,
+.stApp h2,
+.stApp h3,
+.stApp h4{
+    color:#002D62 !important;
+    font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;
+}
+
+/* Caption */
+[data-testid="stCaptionContainer"]{
+    color:#64748B !important;
+}
+
+/* Label selectbox */
+.stSelectbox label{
+    color:#1F2937 !important;
+}
+
+/* Metric */
+[data-testid="stMetricLabel"]{
+    color:#64748B !important;
+}
+
+[data-testid="stMetricValue"]{
+    color:#FF5722 !important;
+}
+
+/* Info Card */
+.info-card{
+    background:#EBF3FA;
+    border-left:5px solid #002D62;
+    padding:15px;
+    border-radius:8px;
+    margin-bottom:20px;
+    color:#1F2937;
+}
+
+/* Metric Card */
+.metric-card{
+    background:#FFFFFF;
+    border:1px solid #E2E8F0;
+    border-radius:10px;
+    padding:15px;
+    text-align:center;
+    box-shadow:0 2px 4px rgba(0,0,0,.04);
+}
+
+.metric-value{
+    font-size:22px;
+    font-weight:bold;
+    color:#FF5722;
+}
+
+.metric-label{
+    font-size:13px;
+    color:#64748B;
+}
+
+/* Footer */
+.footer{
+    position:fixed;
+    left:0;
+    bottom:0;
+    width:100%;
+    background:#FFFFFF;
+    color:#6C757D;
+    text-align:right;
+    padding:8px 30px;
+    font-size:12px;
+    border-top:1px solid #E9ECEF;
+    z-index:999;
+}
+
+/* Hide Streamlit */
+#MainMenu{
+    visibility:hidden;
+}
+
+footer{
+    visibility:hidden;
+}
+
 </style>
-""",
-    unsafe_allow_html=True,
-)
+""", unsafe_allow_html=True)
 
 # Path ke logo lokal
 LOGO_PATH = "logo.png"
-
-
 # ==========================================
 # 2. DATA LOAD / GENERATOR
 # ==========================================
