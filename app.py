@@ -405,6 +405,7 @@ with header_col2:
 # ==========================================
 # FILTER
 # ==========================================
+st.write("")      # 1 enter
 col_ctrl1, col_ctrl2 = st.columns([1.3, 0.7])
 
 with col_ctrl1:
@@ -599,6 +600,7 @@ with col3:
     </div>
     """, unsafe_allow_html=True)
 
+st.write("")      # 1 enter
 st.write("")      # 1 enter
 
 st.subheader(f"📈 Historis & Forecast Penumpang - {selected_display}")
