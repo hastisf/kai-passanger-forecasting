@@ -74,7 +74,7 @@ This project aims to forecast monthly railway passenger volume in Indonesia usin
 
 ## 🤖 Forecasting Model
 
-The following forecasting models were evaluated:
+Several forecasting models were evaluated using the historical railway passenger dataset.
 
 | Model | MAE | RMSE | MAPE |
 |:----------------|---------:|---------:|---------:|
@@ -85,18 +85,25 @@ The following forecasting models were evaluated:
 | Holt-Winters | 20,101.08 | 22,193.01 | 49.22% |
 | Prophet | 32,427.39 | 34,950.11 | 80.84% |
 
+> **Model Evaluation Note**
+>
+> The historical dataset includes the **COVID-19 pandemic period (2020–2021)**, during which railway passenger volume declined drastically because of government mobility restrictions. This unprecedented disruption created a **structural break** in the time series, causing passenger numbers to deviate significantly from normal seasonal patterns.
+>
+> As a result, forecasting errors (MAE, RMSE, and MAPE) became relatively higher than they would be under normal operating conditions. Therefore, these evaluation metrics should not be interpreted as the sole indicator of model quality.
+
 ### Why SARIMA?
 
-Although **Random Forest** achieved the lowest forecasting error, its long-term predictions were less realistic for time series behavior.
+Although **Random Forest** achieved the lowest error metrics, its long-term forecasts tended to fluctuate and did not preserve the underlying time-series behavior.
 
-SARIMA was selected because it better preserves:
+**SARIMA** was selected as the final forecasting model because it:
 
-- Trend
-- Seasonality
-- Long-term forecasting stability
+- Captures long-term trends and seasonal patterns more effectively.
+- Produces smoother and more realistic forecasts for future periods.
+- Is more interpretable for time-series forecasting compared to black-box machine learning models.
+- Demonstrates better stability when forecasting beyond the observed data.
+- Provides forecast patterns that align more closely with the actual characteristics of railway passenger demand.
 
-making it the most representative model for railway passenger forecasting.
-
+Considering both quantitative evaluation and qualitative forecast behavior, **SARIMA produced the most representative and reliable long-term forecasting results for this project.**
 ---
 
 ## 📊 Dashboard Preview
