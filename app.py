@@ -735,7 +735,7 @@ flex-wrap:wrap;
 ">
 
 <div>
-© 2026 <b>Hasti Sri Fatmawati</b>
+© 2026 <b>Hasti Sri Fatmawati | Data Analyst Portfolio</b>
 </div>
 
 <div>
